@@ -1,0 +1,8 @@
+node_modules/
+dist/
+attachments/
+generated_images/
+work/
+scratch/
+library-files/
+shared/
