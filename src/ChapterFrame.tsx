@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { source } from './story'
 import './frames.css'
 
 const symbols: Record<string, ReactNode> = {
@@ -17,61 +18,55 @@ const symbols: Record<string, ReactNode> = {
 export function FooterMark({id}: {id:string}) {
   return <div className="folio-mark" aria-hidden="true"><i/><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round">{symbols[id]}</svg><i/></div>
 }
-const corners = [[64,42,0],[656,42,90],[656,478,180],[64,478,270]]
-const beading = (x:number,y:number,w:number,h:number,color:string) => <rect x={x} y={y} width={w} height={h} fill="none" stroke={color} strokeWidth="4" strokeDasharray="1 6" strokeLinecap="round"/>
-function Vines() {
-  return <g fill="none" stroke="#727449" strokeWidth="2">
-    {[false,true].map(mirror=><g key={String(mirror)} transform={mirror?'translate(720 0) scale(-1 1)':undefined}>
-      <path d="M225 492Q50 491 60 362T67 170Q21 43 217 30M50 330q-25-48 1-74t9-72m27-95q-12-40 36-53"/>
-      {Array.from({length:19},(_,i)=>{
-        const y=62+i*22, x=54+Math.sin(i*.55)*10+(i===0?40:0);
-        return <g key={i} transform={`translate(${x},${y}) rotate(${i%2?15:-25})`}><path d={i%2?'M0 0q-25-1-28-19Q-8-19 0 0z':'M0 0q8-27 23-27Q23-8 0 0z'} fill={i%3?'#a4a471':'#737951'}/>{i%4===1&&<g fill="#fff5c9" stroke="#a29b66" strokeWidth="1">{[0,72,144,216,288].map(a=><ellipse key={a} cy="-5" rx="3.5" ry="6" transform={`rotate(${a})`}/>)}</g>}</g>
-      })}
-    </g>)}
-  </g>
-}
 function Material({id}: {id:string}) {
   switch(id) {
-    case 'ch01': return <><rect x="60" y="38" width="600" height="444" fill="url(#folio-walnut)" stroke="#1a110b" strokeWidth="10"/>{[9,16,29].map(d=><rect key={d} x={60+d} y={38+d} width={600-d*2} height={444-d*2} fill="none" stroke={d===16?'#492a19':'#af8851'} strokeWidth={d===16?8:2}/>)}{beading(83,61,554,398,'#b49361')}{corners.map(([x,y,a])=><path key={a} transform={`translate(${x} ${y}) rotate(${a})`} d="M1 1h64q-30 1-42 15 14-5 18 3-17 3-23 13-9-7-3-17Q4 25 1 63z" fill="#b79055" stroke="#573a22"/>)}</>
     case 'ch02': return <><rect x="36" y="23" width="644" height="473" fill="url(#folio-check)" transform="rotate(-2 360 260)"/><rect x="92" y="44" width="536" height="432" rx="62" fill="url(#folio-glaze)" stroke="#c7bea2" strokeWidth="3"/><rect x="105" y="56" width="510" height="405" rx="51" fill="none" stroke="#51684d" strokeWidth="2"/><rect x="110" y="61" width="500" height="395" rx="46" fill="none" stroke="#98a183"/><rect x="140" y="88" width="440" height="343" rx="24" fill="#d3cbb1" stroke="#ece6cd" strokeWidth="9"/></>
-    case 'ch03': return <><path d="M0 0h144q-12 190-83 322L33 520H0zm720 0H576q12 190 83 322l28 198h33z" fill="url(#folio-velvet)"/><path d="M92 480V194Q112 88 360 13q248 75 268 181v286z" fill="url(#folio-lights)" stroke="#48414c" strokeWidth="9"/><path d="M107 463V199Q114 105 360 28q245 77 253 171v264z" fill="none" stroke="#d2b372" strokeWidth="3"/><g fill="none" stroke="#635563" strokeWidth="4"><path d="M145 175q45-71 111-101l104 97L464 74q64 30 111 101M360 24v148M203 119l47 52m266-52-47 52"/><circle cx="360" cy="105" r="38"/><path d="m360 66 27 39-27 39-27-39z"/></g></>
-    case 'ch04': return <><rect x="26" y="65" width="669" height="399" rx="4" fill="#452628" stroke="#1d1719" strokeWidth="7"/><path d="M40 64q83-21 153 5 220-31 486-3v383q-273-19-486 4-78-20-153-5z" fill="url(#folio-leaves)" stroke="#856b50" strokeWidth="3"/><path d="M44 58q77-20 149 7 225-32 481-6v376q-265-19-481 5-80-23-149-4z" fill="url(#folio-page)"/><path d="M193 65v376" stroke="#503a2b" strokeWidth="5"/><g stroke="#83693f" fill="none"><ellipse cx="117" cy="248" rx="50" ry="69"/><ellipse cx="117" cy="248" rx="43" ry="61"/><path d="m117 189 37 92H80zm0 117-38-92h75z"/><circle cx="117" cy="248" r="18"/></g><path d="M217 425v60l11-10 12 7v-58" fill="#773a39"/></>
-    case 'ch05': return <><path d="m267 418-11 46-52 17v15h312v-15l-52-17-11-46z" fill="url(#folio-glaze)" stroke="#867e60" strokeWidth="3"/><rect x="75" y="25" width="570" height="416" rx="28" fill="url(#folio-plastic)" stroke="#8d876d" strokeWidth="4"/><rect x="100" y="48" width="520" height="350" rx="27" fill="#4a493c" stroke="#aaa38c" strokeWidth="8"/>{Array.from({length:14},(_,i)=><path key={i} d={`M${115+i*8} 405v15`} stroke="#938b72" strokeWidth="4"/>)}<rect x="551" y="402" width="32" height="17" rx="5" fill="#b9b29c" stroke="#8e8772"/><circle cx="600" cy="410" r="4" fill="#778c44"/></>
-    case 'ch06': return <><path d="m47 77 618-46 9 432-628 18z" fill="#231d17"/><rect x="72" y="59" width="576" height="395" fill="url(#folio-walnut)" stroke="#413021" strokeWidth="6"/><rect x="96" y="82" width="528" height="346" fill="none" stroke="#a98956" strokeWidth="4"/><path d="m44 450 626-7 26 26-672 13z" fill="#785338" stroke="#402a1b" strokeWidth="4"/><path d="m31 478 660-11" stroke="#bd9867" strokeWidth="2"/></>
-    case 'ch07': return <><rect x="58" y="44" width="604" height="425" fill="#f4f0d9" stroke="#b0ab7e" strokeWidth="2"/><rect x="73" y="57" width="574" height="400" fill="none" stroke="#aa9c60" strokeDasharray="12 3 2 3"/></>
-    case 'ch08': return <><path d="M61 54q112 17 285 4 169 13 314-12-10 54-7 105 18 185 7 313-75-12-131-8-261 20-468 2 14-113 1-208Q70 125 61 54z" fill="url(#folio-linen)" stroke="#876950" strokeWidth="3"/><g fill="url(#folio-puff)">
-      <path d="M65 56Q198 77 348 59q179 12 307-10l-72 68q-216 12-443 0z"/>
-      <path d="M64 458q233 15 465-4l129 9-73-62q-223 12-447 0z"/>
-      <path d="M61 56q14 109 0 402l79-55q-8-162 0-287z"/>
-      <path d="M657 51q-13 91-1 199l2 208-74-57q10-164-1-283z"/>
-    </g><g fill="none" stroke="#846953" strokeWidth="1.2" opacity=".62">
-      {[0,1,2,3,4,5].map(i=><g key={i}><path d={`M${72+i*7} ${68+i*2}q20 4 47 ${27-i*2}m${443-i*3} ${327-i*2}q40 12 69 43`}/><path d={`M${640-i*6} ${70+i}q-21 5-41 29M${75+i*4} ${442-i}q28-10 51-31`}/></g>)}
-    </g><path d="M76 70q120 14 270 3 163 12 298-11-8 168 3 382-197 15-570-1 9-133 0-373z" fill="none" stroke="#efe0c0" strokeDasharray="5 4" strokeWidth="2"/><path d="M70 62q44 20 69 53m510-59q-36 23-62 65M70 450q39-27 69-36m512 40q-39-35-63-36" stroke="#9e816c" strokeWidth="5" fill="none"/></>
     default: return <><rect x="73" y="39" width="574" height="443" fill="#222628" stroke="#080b0d" strokeWidth="11"/><rect x="85" y="51" width="550" height="419" stroke="#636b69" fill="none"/>{[97,623].map(x=>[65,454].map(y=><g key={x+'-'+y}><circle cx={x} cy={y} r="7" fill="#404644"/><path d={`m${x-3} ${y+2} 6-4`} stroke="#151718"/></g>))}</>
   }
 }
 function Patterns() {
   return <defs>
-    <pattern id="folio-walnut" width="150" height="17" patternUnits="userSpaceOnUse"><rect width="150" height="17" fill="#5b3c29"/><path d="M-10 4q46-7 82 2t93-3M0 13q34 4 62-1t92 0" stroke="#352319" fill="none"/><path d="M2 9q62-5 100 1t59 0" stroke="#80583a" fill="none"/></pattern>
     <pattern id="folio-check" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="18" height="18" fill="#e0d5b0"/><path d="M0 4.5h18M4.5 0v18" stroke="#638166" opacity=".54" strokeWidth="9"/></pattern>
     <linearGradient id="folio-glaze" x2=".7" y2="1"><stop stopColor="#fffce7"/><stop offset=".44" stopColor="#f2edda"/><stop offset=".86" stopColor="#d4cdb4"/><stop offset="1" stopColor="#a7a58d"/></linearGradient>
-    <pattern id="folio-velvet" width="38" height="20" patternUnits="userSpaceOnUse"><rect width="38" height="20" fill="#5c424f"/><path d="M9 0v20" stroke="#745565" strokeWidth="11"/><path d="M31 0v20" stroke="#48343f" strokeWidth="6"/></pattern>
-    <pattern id="folio-lights" width="66" height="76" patternUnits="userSpaceOnUse"><rect width="66" height="76" fill="#a7a5ba"/><path d="m33 0 33 38-33 38L0 38z" fill="#b68a9b" stroke="#615665" strokeWidth="3"/><path d="m33 9 24 29-24 29L9 38z" fill="#dab899"/><path d="m0 0 32 0L0 35z" fill="#a2beb0"/></pattern>
-    <pattern id="folio-leaves" width="4" height="5" patternUnits="userSpaceOnUse"><rect width="4" height="5" fill="#c3ad89"/><path d="M0 1h4" stroke="#7e6b54"/></pattern>
-    <linearGradient id="folio-page"><stop stopColor="#ddc59f"/><stop offset=".17" stopColor="#e1caa5"/><stop offset=".26" stopColor="#886c4d"/><stop offset=".33" stopColor="#ead5ad"/><stop offset="1" stopColor="#d8be99"/></linearGradient>
-    <linearGradient id="folio-plastic" x2=".35" y2="1"><stop stopColor="#eee7c9"/><stop offset=".57" stopColor="#d7d1b6"/><stop offset="1" stopColor="#b2ac92"/></linearGradient>
-    <linearGradient id="folio-puff" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#6c5042" stopOpacity=".46"/><stop offset=".16" stopColor="#f9e9d1" stopOpacity=".68"/><stop offset=".55" stopColor="#e7d3ba" stopOpacity=".36"/><stop offset="1" stopColor="#6c5042" stopOpacity=".46"/></linearGradient>
-    <pattern id="folio-linen" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#ceb8a2"/><path d="M0 2h7" stroke="#a98f79"/><path d="M2 0v7" stroke="#e1cbb3" opacity=".8"/></pattern>
   </defs>
 }
-export function ChapterFrame({id, children}: {id:string; children:ReactNode}) {
-  return <div className={`folio-scene folio-${id}`}>
-    <svg className="folio-shell" viewBox="0 0 720 520" aria-hidden="true"><Patterns/><Material id={id}/></svg>
+const photographs: Record<string, string> = {
+  ch01: 'chapel',
+  ch03: 'confessional',
+  ch04: 'book',
+  ch05: 'crt',
+  ch06: 'cafe',
+  ch07: 'garden',
+  ch08: 'linen',
+}
+
+function IronFrame() {
+  return <g fill="none">
+    <defs>
+      <pattern id="folio-iron-lattice" width="32" height="32" patternUnits="userSpaceOnUse">
+        <path d="M-16 16L16 48M0 0L32 32M16-16l32 32M-16 16L16-16M0 32L32 0m-16 48 32-32" stroke="#111416" strokeWidth="5" />
+        <path d="m0 0 32 32M0 32 32 0" stroke="#606262" strokeWidth="1.25" />
+      </pattern>
+    </defs>
+    <path d="M84 50H636V470H84Z M103 101H617V419H103Z" fill="url(#folio-iron-lattice)" fillRule="evenodd" />
+    <rect x="100" y="99" width="520" height="322" stroke="#111416" strokeWidth="10" />
+    <rect x="103" y="102" width="514" height="316" stroke="#62615b" strokeWidth="2" />
+    <g transform="translate(557 423)" stroke="#aa9572">
+      <path d="M6 18V10a9 9 0 0 1 18 0v8" strokeWidth="4" />
+      <rect y="16" width="30" height="30" rx="3" fill="#514739" strokeWidth="1.5" />
+      <path d="M15 28v7" stroke="#16181a" strokeWidth="4" strokeLinecap="round" />
+    </g>
+  </g>
+}
+
+export function ChapterFrame({ id, children }: { id: string; children: ReactNode }) {
+  const backdrop = photographs[id]
+  return <div className={`folio-scene folio-${id}${backdrop ? ' folio-photograph' : ''}`}>
+    {backdrop ? <img className="folio-backdrop" alt="" src={source(`media/${backdrop}.webp`)} decoding="async" /> :
+      <svg className="folio-shell" viewBox="0 0 720 520" aria-hidden="true">
+        <Patterns /><Material id={id} />
+        {id === 'ch09' && <IronFrame />}
+      </svg>}
     <div className="folio-photo">{children}</div>
-    <svg className="folio-detail" viewBox="0 0 720 520" aria-hidden="true">
-      {id==='ch07' && <Vines/>}
-      {id==='ch06' && <><path d="M131 88h97L116 311v-96zm119 0h17L116 377v-36z" fill="#ffe5a1" opacity=".14"/><path d="M116 162h488m-365-67v316" stroke="#35271c" strokeWidth="9"/><path d="M116 157h488m-370-61v314" stroke="#bb9362" strokeWidth="2"/></>}
-      {id==='ch09' && <g stroke="#282d30" fill="none">{[149,230,489,571].map(x=><path key={x} d={`M${x} 73v369`} strokeWidth="8"/>)}{[130,380].map(y=><path key={y} d={`M104 ${y}h510`} strokeWidth="7"/>)}<rect x="558" y="355" width="29" height="43" rx="3" fill="#585541"/><path d="M563 355v-8a10 10 0 0 1 20 0v8" strokeWidth="5"/><path d="M573 370v11" strokeWidth="4"/></g>}
-    </svg>
   </div>
 }

@@ -89,7 +89,7 @@ function Cover({ progress, resume }: { progress: Progress; resume: () => void })
       <figure className="cover-plate">{coverMedia && <img src={source(coverMedia.src)} alt="" fetchPriority="high" />}</figure>
       <div className="cover-copy">
       <p className="jacket-imprint" lang="en">Before Forgiveness</p>
-      <h1 id="cover-title" tabIndex={-1}>在获得<br />原谅之前</h1>
+      <h1 id="cover-title" tabIndex={-1} aria-label={title}><span>在获得</span><br /><span>原谅之前</span></h1>
       <p className="cover-author">作者：狗点什么</p>
       <div className="cover-actions">
         <a className="button primary" href="#ch01">开始阅读</a>

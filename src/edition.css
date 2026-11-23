@@ -43,8 +43,8 @@ h1,h2,h3,.music-details strong,.prose {font-weight:400}
 .reading-ch04 .chapter-heading,.reading-ch09 .chapter-heading {border-block:3px double var(--accent);padding:16px 0}
 .reading-ch04 .chapter-heading .ornament,.reading-ch09 .chapter-heading .ornament {display:none}
 @media(min-width:900px){
-  .reading-ch01 .chapter-front,.reading-ch04 .chapter-front,.reading-ch06 .chapter-front {display:grid;grid-template-columns:146px minmax(0,1fr);gap:36px;align-items:center}
-  .reading-ch01 .chapter-heading h1,.reading-ch04 .chapter-heading h1,.reading-ch06 .chapter-heading h1 {writing-mode:vertical-rl;margin:22px auto;letter-spacing:.24em}
+  .reading-ch01 .chapter-front,.reading-ch06 .chapter-front {display:grid;grid-template-columns:146px minmax(0,1fr);gap:36px;align-items:center}
+  .reading-ch01 .chapter-heading h1,.reading-ch06 .chapter-heading h1 {writing-mode:vertical-rl;margin:22px auto;letter-spacing:.24em}
   .reading-ch06 .chapter-front {grid-template-columns:minmax(0,1fr) 146px}
   .reading-ch06 .chapter-heading {grid-column:2;grid-row:1}
   .reading-ch06 .chapter-front > :last-child {grid-column:1;grid-row:1}
@@ -76,8 +76,6 @@ h1,h2,h3,.music-details strong,.prose {font-weight:400}
   .cover-plate {width:87%;align-self:flex-end}
   .cover .cover-copy {align-self:stretch;padding:0 4px}
   .cover .cover-copy h1 {font-size:clamp(46px,12vw,64px);margin:13px 0}
-  .cover .cover-copy h1 br {display:initial}
-  .cover .cover-copy h1 {max-width:6em;text-wrap:balance}
   .cover .cover-actions {margin-top:22px}
   .music-card,.music-card:hover {grid-template-columns:minmax(88px,32%) minmax(0,1fr);gap:6px 14px;padding:12px}
   .deck {grid-row:span 2}
@@ -86,3 +84,13 @@ h1,h2,h3,.music-details strong,.prose {font-weight:400}
 @media(prefers-reduced-motion:reduce){.music-card:hover .disc,.music-card:focus-visible .disc{animation:none}}
 
 .extra-subtitle span {display:inline-block}
+
+.cover .cover-copy h1 span { white-space: nowrap; }
+.reading-silence .chapter-heading {
+  background: linear-gradient(90deg, #35485766, transparent 28% 72%, #35485766);
+  box-shadow: inset 0 1px #c7dbe629;
+}
+.reading-kiss .chapter-heading {
+  background: radial-gradient(ellipse at 70% 100%, #fff7dc, transparent 78%),
+    repeating-linear-gradient(55deg, #b4955e08 0 1px, transparent 1px 5px);
+}

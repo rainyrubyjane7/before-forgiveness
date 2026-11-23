@@ -1,28 +1,32 @@
-.excavation { margin: 3.4rem auto 4.8rem; padding: 0; max-width: 610px; border-block: 1px solid #aa9679; text-indent: 0; }
-.excavation-view { position: relative; margin: 8px 0; height: clamp(300px, 60vw, 395px); overflow: hidden; isolation: isolate; background: #384039; }
-.excavation-view::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 22px #191b163d; }
+.excavation { margin: 3.4rem auto 4.8rem; max-width: 610px; border-block: 1px solid #aa9679; text-indent: 0; }
+.excavation-view { position: relative; margin: 8px 0; height: clamp(300px, 60vw, 395px); overflow: hidden; isolation: isolate; background: #35291d; }
+.excavation-view::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 55px #21190e75; }
 .excavation .excavation-hit { display: block; width: 100%; height: 100%; margin: 0; border: 0; padding: 0; background: transparent; transform: none; }
 .excavation-hit > svg { display: block; width: 100%; height: 100%; }
 .excavation figcaption { display: flex; justify-content: center; padding-block: .9rem 1rem; }
 .excavation figcaption button { min-height: 44px; border: 1px solid #786547; color: #493a26; background: #f6edda; font: inherit; font-size: .9rem; padding: .35rem 2rem; letter-spacing: .08em; box-shadow: inset 0 0 0 3px #eee1c8; }
 .excavation figcaption button:hover:enabled { background: #eadcc0; }
 .excavation button:focus-visible { outline: 3px solid #bc925b; outline-offset: -4px; }
-.excavation .flying-fold { opacity: 0; }
-.excavation .unearthed-vessel { transform-origin: 320px 325px; }
-.excavation .excavated-cork { transform-origin: 148px 194px; }
-.excavation.is-open .bank-left { animation: shift-left 1.55s ease-in-out both; }
-.excavation.is-open .bank-right { animation: shift-right 1.6s ease-in-out both; }
-.excavation.is-open .unearthed-vessel { animation: lift-glass 1.75s .16s cubic-bezier(.34,.02,.24,1) both; }
-.excavation.is-open .excavated-cork { animation: free-cork .6s 1.9s ease-out both; }
-.excavation.is-open .buried-slip { animation: empty-glass .28s 2.36s both; }
-.excavation.is-open .flying-fold { animation: lift-slip .88s 2.32s both; }
-.excavation .excavated-letter { position: absolute; inset: 10% auto auto 50%; width: min(82%,390px); margin: 0; padding: 1.3rem 1.5rem; text-align: center; text-indent: 0; font-size: clamp(15px,2.2vw,20px); line-height: 1.65; color: #3e3222; border: 1px solid #c2aa82; background: linear-gradient(100deg,#e1cc9f,#f1e3c6 48%,#dbc6a1 50%,#ebd9b5 52%,#e6d4af); box-shadow: 0 9px 20px #17160e55; transform: translateX(-50%); transform-origin: center; animation: read-letter .65s ease-out both; }
-@keyframes shift-left { 20% { transform: translate(-2px,1px) } 47% { transform: translate(-8px,2px) rotate(-.3deg) } to { transform: translate(-43px,12px) rotate(.5deg) } }
-@keyframes shift-right { 30% { transform: translate(3px,2px) } 57% { transform: translate(12px,1px) } to { transform: translate(47px,11px) rotate(-.5deg) } }
-@keyframes lift-glass { 0% { transform: none } 19% { transform: translate(0,-5px) rotate(-4deg) } 41% { transform: translate(2px,-35px) rotate(5deg) } 76% { transform: translate(-3px,-116px) rotate(-3deg) } to { transform: translateY(-155px) } }
-@keyframes free-cork { 26% { transform: translateY(-5px) rotate(-3deg) } to { transform: translate(19px,-28px) rotate(38deg); opacity: 0; } }
+.dig-hollow { opacity: .15; transition: opacity 1.6s; }
+.is-open .dig-hollow { opacity: .96; }
+.vessel-shadow { opacity: .25; filter: blur(5px); transition: opacity 1.7s; }
+.is-open .vessel-shadow { opacity: .72; }
+.earth-bank { transform-origin: 320px 235px; }
+.is-open .bank-0 { animation: shift-left 1.78s ease-in-out both; }
+.is-open .bank-1 { animation: shift-right 1.8s ease-in-out both; }
+.unearthed-vessel { transform-origin: 320px 215px; }
+.is-open .unearthed-vessel { animation: lift-glass 1.65s .25s cubic-bezier(.34,.02,.24,1) both; }
+.excavated-cork { transform-origin: 148px 194px; }
+.is-open .excavated-cork { animation: free-cork .68s 1.88s ease-out both; }
+.is-open .buried-slip { animation: empty-glass .28s 2.36s both; }
+.flying-fold { opacity: 0; }
+.is-open .flying-fold { animation: lift-slip .88s 2.30s both; }
+.excavation .excavated-letter { position: absolute; inset: auto auto 6% 50%; width: min(85%,390px); margin: 0; padding: .95rem 1.2rem; text-align: center; text-indent: 0; text-wrap: balance; font-size: clamp(15px,2.2vw,20px); line-height: 1.65; color: #3e3222; border: 1px solid #c2aa82; background: linear-gradient(100deg,#e1cc9f,#f1e3c6 48%,#dbc6a1 50%,#ebd9b5 52%,#e6d4af); box-shadow: 0 9px 20px #17160e77; transform: translateX(-50%); animation: read-letter .65s ease-out both; }
+@keyframes shift-left { 23% { transform: translate(-4px,2px) rotate(-4deg) } 45% { transform: translate(-15px,4px) rotate(5deg) } 84% { opacity: .75 } to { transform: translate(-110px,42px) rotate(-18deg); opacity: 0 } }
+@keyframes shift-right { 20% { transform: translate(3px,-3px) rotate(3deg) } 44% { transform: translate(17px,8px) rotate(-6deg) } 84% { opacity: .75 } to { transform: translate(105px,24px) rotate(21deg); opacity: 0 } }
+@keyframes lift-glass { 18% { transform: translate(1px,-4px) rotate(-4deg) } 54% { transform: translate(-10px,-13px) rotate(8deg) } to { transform: translate(-14px,-40px) rotate(21deg) } }
+@keyframes free-cork { 26% { transform: translateY(-5px) rotate(-3deg) } to { transform: translate(-36px,-24px) rotate(-63deg); opacity: 0; } }
 @keyframes empty-glass { to { opacity: 0; } }
-.excavation .excavated-letter { text-wrap: balance; }
-@keyframes lift-slip { 0% { transform: translateY(-84px) scale(.98); opacity: 0 } 16% { opacity: 1 } 81% { opacity: 1 } to { transform: translateY(-186px); opacity: 0 } }
+@keyframes lift-slip { 0% { transform: translate(313px,182px) rotate(10deg); opacity: 0 } 19%,76% { opacity: 1 } 57% { transform: translate(358px,102px) rotate(-19deg) } to { transform: translate(292px,310px) rotate(-4deg); opacity: 0 } }
 @keyframes read-letter { from { transform: translateX(-50%) perspective(360px) rotateX(72deg) scaleX(.24); opacity: 0; } to { transform: translateX(-50%); opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .excavation * { animation-duration: .01ms !important; animation-delay: 0ms !important; } }
+@media (prefers-reduced-motion: reduce) { .excavation * { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; } }
