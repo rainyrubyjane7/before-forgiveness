@@ -211,6 +211,7 @@ function Bottle() {
   const note = useRef<HTMLDivElement>(null)
   const bottle = useRef<HTMLButtonElement>(null)
   const message = story.bottle[1].slice(1, -1).replace('Sammy', ' Sammy ')
+  const reference = new URL(source('media/bottle.webp'), document.baseURI).href
 
   useEffect(() => {
     if (!open) return
@@ -222,7 +223,7 @@ function Bottle() {
   useEffect(() => { if (revealed) note.current?.focus() }, [revealed])
 
   return <figure className={`bottle-page ${open ? 'bottle-open' : ''}`}>
-    <div className="bottle-stage" style={{ '--bottle-reference': `url("${source('media/bottle.webp')}")` } as CSSProperties}>
+    <div className="bottle-stage" style={{ '--bottle-reference': `url("${reference}")` } as CSSProperties}>
       <button className="bottle-object" ref={bottle} type="button" aria-label={story.bottle[0]} disabled={open} onClick={() => setOpen(true)}>
         <span className="cork" /><span className="neck" />
         <span className="glass"><span className="folded-note" /></span>
