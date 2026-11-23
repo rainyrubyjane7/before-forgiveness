@@ -1,18 +1,73 @@
 {
   "mapped": {
-    "ch01": [],
-    "ch02": [],
-    "ch03": [],
-    "ch04": [],
-    "ch05": [],
-    "ch06": [],
-    "ch07": [],
-    "ch08": [],
-    "ch09": [],
     "silence": [],
     "kiss": [],
     "extra": [],
-    "cover": []
+    "ch01": [
+      {
+        "src": "media/ch01.webp",
+        "type": "image"
+      }
+    ],
+    "ch02": [
+      {
+        "src": "media/ch02.webp",
+        "type": "image"
+      }
+    ],
+    "ch03": [
+      {
+        "src": "media/ch03.webp",
+        "type": "image"
+      }
+    ],
+    "ch04": [
+      {
+        "src": "media/ch04.webp",
+        "type": "image",
+        "position": "36% center"
+      }
+    ],
+    "ch05": [
+      {
+        "src": "media/ch05.webp",
+        "type": "image"
+      }
+    ],
+    "ch06": [
+      {
+        "src": "media/ch06.webp",
+        "type": "image"
+      }
+    ],
+    "ch07": [
+      {
+        "src": "media/ch07.webp",
+        "type": "image"
+      }
+    ],
+    "ch08": [
+      {
+        "src": "media/ch08.webp",
+        "type": "image",
+        "position": "54% center"
+      }
+    ],
+    "ch09": [
+      {
+        "src": "media/ch09.webp",
+        "type": "image",
+        "position": "58% center"
+      }
+    ],
+    "cover": [
+      {
+        "src": "media/cover.webp",
+        "type": "image",
+        "position": "center 58%",
+        "mobilePosition": "55% center"
+      }
+    ]
   },
   "ambiguous": [],
   "unmatched": [],
