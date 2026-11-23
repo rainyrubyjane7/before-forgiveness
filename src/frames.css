@@ -1,0 +1,116 @@
+.folio-scene {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 820px);
+  margin: 0 auto clamp(22px, 4vw, 42px);
+  aspect-ratio: 720 / 520;
+  container-type: inline-size;
+}
+.folio-shell, .folio-detail {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.folio-shell { filter: drop-shadow(0 8px 6px #100d0a38); }
+.folio-detail { z-index: 2; }
+.folio-photo {
+  position: absolute;
+  left: var(--photo-x);
+  top: var(--photo-y);
+  width: var(--photo-w);
+  height: var(--photo-h);
+  overflow: hidden;
+}
+.folio-scene .folio-photo .chapter-media, .folio-scene .folio-photo .feature-media {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  box-shadow: none;
+  background: transparent;
+  aspect-ratio: auto;
+  animation: none;
+}
+.folio-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 2px 6px #18100f52;
+  pointer-events: none;
+}
+.folio-ch01 {
+  --photo-x: 13.2%; --photo-y: 14%; --photo-w: 73.6%; --photo-h: 72%;
+  background: radial-gradient(ellipse at 43% 9%, #c2996630, transparent 65%),
+    repeating-linear-gradient(90deg,#181210 0,#251b18 17%,#49352c 17.2%,#201916 17.5%);
+}
+.folio-ch01::before {
+  content:''; position:absolute; left:40%; top:1.4%; width:20%; height:12%;
+  background:#967a55; clip-path:polygon(0 100%,49% 0,51% 0,100% 100%,98% 100%,50% 3%,2% 100%);
+}
+.folio-ch02 {
+  --photo-x: 20%; --photo-y: 18.6%; --photo-w: 60%; --photo-h: 63.1%;
+  background: repeating-linear-gradient(0deg,#687a5a 0 1px,transparent 1px 4px),
+    repeating-linear-gradient(90deg,#708263 0 1px,#546b51 1px 5px);
+}
+.folio-ch02 .folio-photo { border-radius: 5% / 7%; }
+.folio-ch03 {
+  --photo-x: 20.2%; --photo-y: 33.3%; --photo-w: 59.6%; --photo-h: 48.5%;
+  background: repeating-linear-gradient(48deg,transparent 0 11px,#755d7340 11px 13px,transparent 13px 24px),
+    repeating-linear-gradient(-48deg,#dbc9d7 0 12px,#bfa6b8 12px 14px,#e4d6de 14px 24px);
+}
+.folio-ch03 .folio-photo { border: .55cqw solid #524852; border-radius: 49% 49% 0 0 / 20% 20% 0 0; }
+.folio-ch04 {
+  --photo-x: 29.9%; --photo-y: 19.2%; --photo-w: 59.6%; --photo-h: 57.6%;
+  background: repeating-linear-gradient(157deg,#242021 0 2px,#272223 3px 5px);
+}
+.folio-ch04 .folio-photo { transform: rotate(-.7deg); border: .65cqw double #826b50; padding: .3cqw; }
+.folio-ch05 {
+  --photo-x: 15.5%; --photo-y: 10.8%; --photo-w: 69%; --photo-h: 63.8%;
+  background: radial-gradient(ellipse at 54% 82%,#73784e66,transparent 49%),
+    linear-gradient(168deg,#f8edb4 0 44%,#e1dca2 44.5% 46%,#bec384 47% 58%,#a3ab71 72%,#c6be88);
+}
+.folio-ch05 .folio-photo { border-radius: 5% / 8%; }
+.folio-ch05 .folio-photo::after {
+  background: repeating-linear-gradient(0deg,transparent 0 3px,#2b303810 3px 4px),linear-gradient(133deg,#fff8dd30,transparent 41%);
+  box-shadow: inset 3px 4px 11px #1315119c;
+}
+.folio-ch06 {
+  --photo-x: 15.9%; --photo-y: 17.8%; --photo-w: 68.2%; --photo-h: 61.8%;
+  background: linear-gradient(119deg,transparent 24%,#cdad733d 24.3% 34%,transparent 34.5% 42%,#ddba7730 42.3% 55%,transparent 55.4%),#413023;
+}
+.folio-ch07 {
+  --photo-x: 12.6%; --photo-y: 14.5%; --photo-w: 74.8%; --photo-h: 69%;
+  background: radial-gradient(ellipse at center,#fffef4 10%,#f3f0d4 65%,#e7e5c4);
+}
+.folio-ch08 {
+  --photo-x: 19%; --photo-y: 22%; --photo-w: 62%; --photo-h: 56%;
+  background: repeating-linear-gradient(38deg,#c5ad90 0 1px,#d4c3a9 1px 5px);
+}
+.folio-ch08 .folio-photo {
+  border-radius: 5% 6% 4% 5% / 6% 4% 8% 6%;
+  border: 2px solid #8b705b;
+  box-shadow: 0 0 0 .4cqw #d9c6b1,0 0 0 .6cqw #a88c74,0 0 1.2cqw .8cqw #9d806866,0 0 2.8cqw 2.3cqw #eadbc05e;
+}
+.folio-ch09 {
+  --photo-x: 14.6%; --photo-y: 14%; --photo-w: 70.8%; --photo-h: 71%;
+  background: repeating-linear-gradient(115deg,transparent 0 4px,#7277760a 4px 6px),radial-gradient(ellipse at 50% 16%,#353a3c,#171b1c 66%,#0c0e10);
+}
+.folio-ch09 .folio-photo::after { box-shadow: inset 0 0 3cqw #000c; }
+.folio-mark { display:flex; justify-content:center; align-items:center; gap:12px; margin:35px auto; color:var(--ink,currentColor); }
+.folio-mark svg { width:32px; height:32px; }
+.folio-mark i { width:36px; height:1px; opacity:.45; background:currentColor; }
+@media (max-width:600px) {
+  .folio-scene { width:calc(100% + 24px); max-width:calc(100% + 24px); margin-inline:-12px; }
+  .folio-shell { filter: drop-shadow(0 3px 3px #100d0a3d); }
+  .folio-mark { margin-block:28px; }
+}

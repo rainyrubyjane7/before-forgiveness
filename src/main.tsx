@@ -5,6 +5,9 @@ import { Icon } from './icons'
 import { chapterIds, endingIds, readingIds, coverMedia, heading, mediaFor, routeFromHash, settings, shortTitle, source, story, title } from './story'
 import type { EndingId, Media, ReadingId, Route } from './story'
 import './style.css'
+import { ChapterFrame, FooterMark } from './ChapterFrame'
+import { MemoryBottle } from './MemoryBottle'
+import './edition.css'
 
 const storageKey = 'before-forgiveness:v1'
 type Checkpoint = { route: Route; scroll: number }
@@ -15,7 +18,7 @@ function readProgress(): Progress {
   try {
     const saved = JSON.parse(localStorage.getItem(storageKey) ?? 'null')
     const point = saved?.checkpoint
-    const routes = [...readingIds, 'choice', 'bottle', 'epilogue']
+    const routes = [...readingIds, 'choice', 'bottle', 'epilogue', 'credits']
     return {
       checkpoint: routes.includes(point?.route) && Number.isFinite(point?.scroll)
         ? { route: point.route, scroll: Math.max(0, point.scroll) } : null,
@@ -75,24 +78,24 @@ function Directory({ progress }: { progress: Progress }) {
     </ol>
     <div className="appendix-links">
       <a href="#choice"><span>双重结局</span>选择 <Icon name="arrow" size={16} /></a>
-      {progress.finished.length > 0 && <a href="#epilogue"><span>番外</span>Dean 的记忆 <Icon name="arrow" size={16} /></a>}
+      {progress.finished.length > 0 && <a href="#epilogue"><span>片尾</span>与番外 <Icon name="arrow" size={16} /></a>}
     </div>
   </section>
 }
 
 function Cover({ progress, resume }: { progress: Progress; resume: () => void }) {
   return <section className="cover" id="home" aria-labelledby="cover-title">
-    {coverMedia && <img className="cover-image" src={source(coverMedia.src)} style={mediaStyle(coverMedia)} alt="" fetchPriority="high" />}
-    <div className="cover-shade" />
-    <div className="cover-frame" aria-hidden="true" />
-    <div className="cover-copy">
-      <h1 id="cover-title" tabIndex={-1}>《{title.slice(0, 3)}<br />{title.slice(3)}》</h1>
+    <div className="jacket">
+      <figure className="cover-plate">{coverMedia && <img src={source(coverMedia.src)} alt="" fetchPriority="high" />}</figure>
+      <div className="cover-copy">
+      <p className="jacket-imprint" lang="en">Before Forgiveness</p>
+      <h1 id="cover-title" tabIndex={-1}>在获得<br />原谅之前</h1>
       <p className="cover-author">作者：狗点什么</p>
       <div className="cover-actions">
         <a className="button primary" href="#ch01">开始阅读</a>
         {progress.checkpoint && <button className="button quiet" type="button" onClick={resume}>继续阅读</button>}
       </div>
-    </div>
+    </div></div>
   </section>
 }
 
@@ -164,24 +167,24 @@ function Reading({ id, finish }: { id: ReadingId; finish: (id: EndingId) => void
   const nextText = chapter >= 0 && chapter < 8 ? `下一章 · ${shortTitle(chapterIds[chapter + 1])}` : '进入选择'
   return <article className={`reading reading-${id}`} style={theme}>
     <div className="reading-inner">
-      <header className="chapter-heading">
+      <div className="chapter-front"><header className="chapter-heading">
         <SectionOrnament />
         <p className="eyebrow">{chapter >= 0 ? `CHAPTER ${chapter + 1}` : ending >= 0 ? `ENDING 0${ending + 1}` : 'EPILOGUE'}</p>
         <h1 tabIndex={-1}>{shortTitle(id)}</h1>
-        {id === 'extra' && <p className="extra-subtitle">{heading(id).split('——')[1]}</p>}
+        {id === 'extra' && <p className="extra-subtitle">{heading(id).split('——')[1].match(/[^，]+，?/g)?.map(phrase => <span key={phrase}>{phrase}</span>)}</p>}
       </header>
-      {chapter >= 0 && <ChapterMedia id={id} />}
+      {chapter >= 0 && <ChapterFrame id={id}><ChapterMedia id={id} /></ChapterFrame>}</div>
       {music && <a className="music-card" href={music.url} target="_blank" rel="noopener noreferrer">
-        <span className="music-icon"><Icon name="note" /></span>
-        <span className="music-details"><small className="music-label">{chapter >= 0 ? `CHAPTER ${chapter + 1}` : `ENDING ${ending + 1}`} · {shortTitle(id)}</small><strong>{music.song}</strong>{music.artist && <small>{music.artist}</small>}</span>
+        <span className="deck" aria-hidden="true"><i className="disc" /><i className="tonearm" /><i className="speed-switch" /></span>
+        <span className="music-details"><strong>{music.song}</strong>{music.artist && <small>{music.artist}</small>}</span>
         <span className="music-link">前往网易云音乐收听 <Icon name="external" size={16} /></span>
       </a>}
-      <div className="prose"><Paragraphs lines={story[id].slice(ending >= 0 ? 2 : 1)} />{id === 'extra' && <Bottle />}</div>
-      <SectionOrnament className="end-ornament" />
+      <div className="prose"><Paragraphs lines={story[id].slice(ending >= 0 ? 2 : 1)} />{id === 'extra' && <MemoryBottle />}</div>
+      {id !== 'extra' && <FooterMark id={id} />}
       <nav className="reading-nav" aria-label="阅读导航">
         <a className="button quiet" href={`#${previous}`}><Icon name="back" size={17} /> {previousText}</a>
         {chapter >= 0 && <a className="button primary" href={`#${next}`}>{nextText} <Icon name="arrow" size={17} /></a>}
-        {ending >= 0 && <button className="button primary" type="button" onClick={() => finish(endingIds[ending])}>读完结局，前往番外</button>}
+        {ending >= 0 && <button className="button primary" type="button" onClick={() => finish(endingIds[ending])}>读完结局，观看片尾</button>}
       </nav>
       <button type="button" className="top-link" onClick={() => window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}>返回顶部 <Icon name="up" size={16} /></button>
     </div>
@@ -200,63 +203,40 @@ function Choice({ unlocked }: { unlocked: boolean }) {
         {endingIds.map(id => <a key={id} className="button" href={`#${id}`}>{story[id][0].replace(/。$/, '')}<Icon name="arrow" size={19} /></a>)}
       </div>
       <a className="subtle-link" href="#ch09"><Icon name="back" size={16} /> 返回第九章</a>
-      {unlocked && <a className="subtle-link" href="#epilogue">前往番外入口</a>}
+      {unlocked && <a className="subtle-link" href="#credits">前往片尾</a>}
     </div>
   </section>
 }
 
-function Bottle() {
-  const [open, setOpen] = useState(false)
-  const [revealed, setRevealed] = useState(false)
-  const note = useRef<HTMLDivElement>(null)
-  const bottle = useRef<HTMLButtonElement>(null)
-  const message = story.bottle[1].slice(1, -1).replace('Sammy', ' Sammy ')
-  const reference = new URL(source('media/bottle.webp'), document.baseURI).href
-
-  useEffect(() => {
-    if (!open) return
-    const delay = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1320
-    const timer = window.setTimeout(() => setRevealed(true), delay)
-    return () => window.clearTimeout(timer)
-  }, [open])
-
-  useEffect(() => { if (revealed) note.current?.focus() }, [revealed])
-
-  return <figure className={`bottle-page ${open ? 'bottle-open' : ''}`}>
-    <div className="bottle-stage" style={{ '--bottle-reference': `url("${reference}")` } as CSSProperties}>
-      <button className="bottle-object" ref={bottle} type="button" aria-label={story.bottle[0]} disabled={open} onClick={() => setOpen(true)}>
-        <span className="cork" /><span className="neck" />
-        <span className="glass"><span className="folded-note" /></span>
-      </button>
-      <div className="rising-note" aria-hidden="true" />
-      {revealed && <div className="opened-note" ref={note} tabIndex={-1}>{message}</div>}
-    </div>
-    <figcaption className="bottle-actions">
-      {!open && <button type="button" className="button primary" onClick={() => setOpen(true)}>打开瓶子</button>}
-      {revealed && <button type="button" className="button quiet" onClick={() => { setRevealed(false); setOpen(false); requestAnimationFrame(() => bottle.current?.focus()) }}>重新查看</button>}
-    </figcaption>
-  </figure>
-}
-
-function Epilogue() {
+function Epilogue({ film }: { film: boolean }) {
+  const [ended, setEnded] = useState(() => {
+    try { return localStorage.getItem('before-forgiveness:credits') === 'seen' } catch { return false }
+  })
   const [failed, setFailed] = useState(false)
-  return <section className="immersive epilogue">
-    <div className="immersive-inner">
-      <SectionOrnament />
-      <h1 tabIndex={-1}>番外 · Dean 的记忆</h1>
-      <video src={source('media/end.mp4')} preload="metadata" controls playsInline aria-label="番外入口视频" onError={() => setFailed(true)} />
-      {failed && <p role="status">视频暂时无法播放。<a href={source('media/end.mp4')}>打开视频文件</a></p>}
-      <div className="choice-links">
+  function finishFilm() {
+    try { localStorage.setItem('before-forgiveness:credits', 'seen') } catch { /* Session state remains usable. */ }
+    setEnded(true)
+    location.hash = 'epilogue'
+  }
+  const entrance = ended && !film
+  return <section className={`immersive epilogue ${entrance ? 'extra-entry' : 'closing-film'}`}>
+    <div className="immersive-inner" key={String(entrance)}>
+      <h1 tabIndex={-1}>{entrance ? '番外 · Dean 的记忆' : '片尾'}</h1>
+      {entrance ? <div className="choice-links">
         <a className="button primary" href="#extra">进入番外</a>
-        <a className="button quiet" href="#choice">返回结局选择</a>
-      </div>
+        <a className="button quiet" href="#credits">重看片尾</a>
+      </div> : <>
+        <video src={source('media/end.mp4')} preload="metadata" controls playsInline aria-label="片尾影片" onEnded={finishFilm} onError={() => setFailed(true)} />
+        {failed && <p role="status">视频暂时无法播放。<a href={source('media/end.mp4')}>打开视频文件</a> <button onClick={finishFilm}>前往番外入口</button></p>}
+      </>}
+      <a className="subtle-link" href="#choice">返回结局选择</a>
     </div>
   </section>
 }
 
 function readingRoute(progress: Progress): Route {
   const route = routeFromHash()
-  if (route === 'bottle' || route === 'extra' || route === 'epilogue') {
+  if (route === 'bottle' || route === 'extra' || route === 'epilogue' || route === 'credits') {
     if (progress.finished.length === 0) return 'choice'
     if (route === 'bottle') return 'extra'
   }
@@ -281,7 +261,7 @@ function App() {
   useLayoutEffect(() => {
     const scrollTarget = pendingRestore.current
     pendingRestore.current = 0
-    const visiting = isReading(route) || route === 'choice' || route === 'epilogue'
+    const visiting = isReading(route) || route === 'choice' || route === 'epilogue' || route === 'credits'
     if (route === 'contents') {
       const directory = document.getElementById('contents')
       directory?.focus({ preventScroll: true })
@@ -337,7 +317,7 @@ function App() {
   function finish(id: EndingId) {
     const current = readProgress()
     persist({ ...current, finished: endingIds.filter(ending => ending === id || current.finished.includes(ending)) })
-    location.hash = 'epilogue'
+    location.hash = 'credits'
   }
 
   return <>
@@ -347,7 +327,7 @@ function App() {
       {route === 'contents' && <Directory progress={progress} />}
       {isReading(route) && <Reading id={route} finish={finish} />}
       {route === 'choice' && <Choice unlocked={progress.finished.length > 0} />}
-      {route === 'epilogue' && <Epilogue />}
+      {(route === 'epilogue' || route === 'credits') && <Epilogue film={route === 'credits'} />}
     </main>
     {route !== 'home' && <footer className="site-footer"><Icon name="mark" size={18} /><span>{title}</span><a href="#contents">返回目录</a></footer>}
   </>

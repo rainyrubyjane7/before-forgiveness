@@ -29,7 +29,7 @@ npm run dev
 
 ## 正式素材
 
-封面和九章章首图使用从正式素材生成的 WebP，映射位于 `src/imported-media.json`。两个结局使用纯文字排版。完成任意一个结局后，读者可通过独立的番外入口观看 `public/media/end.mp4`。番外正文中的玻璃瓶使用 CSS 分层动画，场景包含 `public/media/bottle.webp`。
+封面和九章章首图使用从正式素材生成的 WebP，映射位于 `src/imported-media.json`。两个结局使用纯文字排版。读完任一结局即可观看片尾影片 `public/media/end.mp4`。影片结束后显示番外入口。番外正文中的玻璃瓶取自 `public/media/bottle.webp`，通过独立的土层、瓶身、瓶塞与纸条完成开瓶动画。
 
 正式正文由 Word 原稿导入。公开仓库只包含提取后的段落和网站使用的媒体文件。
 

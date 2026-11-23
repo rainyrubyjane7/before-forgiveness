@@ -5,7 +5,7 @@ export const chapterIds = ['ch01', 'ch02', 'ch03', 'ch04', 'ch05', 'ch06', 'ch07
 export const endingIds = ['silence', 'kiss'] as const
 export type EndingId = typeof endingIds[number]
 export type ReadingId = typeof chapterIds[number] | EndingId | 'extra'
-export type Route = ReadingId | 'home' | 'contents' | 'choice' | 'bottle' | 'epilogue'
+export type Route = ReadingId | 'home' | 'contents' | 'choice' | 'bottle' | 'epilogue' | 'credits'
 type Framing = { position?: string; mobilePosition?: string; fit?: 'cover' | 'contain'; mobileFit?: 'cover' | 'contain' }
 export type Media = Framing & { src: string; type: 'image' | 'video'; poster?: string }
 type Music = { song: string; artist?: string; url: string }
@@ -23,15 +23,15 @@ const music = {
 } satisfies Record<string, Music>
 
 export const settings: Record<ReadingId, Settings> = {
-  ch01: { theme: ['#38443B', '#B9AC82', '#E4DED0'], setting: '教堂内景' },
-  ch02: { theme: ['#854F43', '#E6BA83', '#FFF0D9'], setting: '美式快餐店', music: music.ch02 },
-  ch03: { theme: ['#E7E4DD', '#A6AEB3', '#22272D'], setting: '教堂彩窗' },
-  ch04: { theme: ['#453B32', '#C4A376', '#EEE1C9'], setting: '神父 Dean' },
-  ch05: { theme: ['#53626A', '#B5BEC1', '#F1EADD'], setting: '窗边的室内景象', music: music.ch05 },
-  ch06: { theme: ['#584430', '#AF8959', '#F8ECD9'], setting: '教堂中殿' },
-  ch07: { theme: ['#462B2A', '#BB865D', '#F5E1CF'], setting: '彩窗下的十字架' },
-  ch08: { theme: ['#564B51', '#D7B8AB', '#F4E9E5'], setting: '车内的 Sam 与 Dean' },
-  ch09: { theme: ['#202936', '#A6B8CA', '#F0F1F2'], setting: '阴影中的 Dean' },
+  ch01: { theme: ['#e7dcc8', '#aa875a', '#302721'], setting: '教堂内景' },
+  ch02: { theme: ['#263e31', '#8a865a', '#eae8d6'], setting: '美式快餐店', music: music.ch02 },
+  ch03: { theme: ['#392c45', '#977899', '#ede5f0'], setting: '教堂彩窗' },
+  ch04: { theme: ['#e2d8c8', '#a49072', '#222023'], setting: '神父 Dean' },
+  ch05: { theme: ['#443922', '#a99052', '#f5e9bb'], setting: '窗边的室内景象', music: music.ch05 },
+  ch06: { theme: ['#eee0cb', '#ad8863', '#352b27'], setting: '教堂中殿' },
+  ch07: { theme: ['#443d32', '#a49556', '#f6f0d7'], setting: '彩窗下的十字架' },
+  ch08: { theme: ['#483733', '#b69578', '#eddfcd'], setting: '车内的 Sam 与 Dean' },
+  ch09: { theme: ['#d9d7cb', '#8b8a78', '#222424'], setting: '阴影中的 Dean' },
   silence: { theme: ['#E3E8ED', '#9AA9B6', '#222E3A'], setting: '沉默', music: music.silence },
   kiss: { theme: ['#634832', '#C19A62', '#F6E9D4'], setting: '晨光', music: music.kiss },
   extra: { theme: ['#51402F', '#B49660', '#EDE0C7'], setting: '旧日记忆' },
@@ -52,5 +52,5 @@ export const shortTitle = (id: ReadingId) => id === 'extra' ? 'Dean 的记忆' :
 export const readingIds: ReadingId[] = [...chapterIds, ...endingIds, 'extra']
 export const routeFromHash = (): Route => {
   const hash = location.hash.slice(1)
-  return [...readingIds, 'contents', 'choice', 'bottle', 'epilogue'].some(route => route === hash) ? hash as Route : 'home'
+  return [...readingIds, 'contents', 'choice', 'bottle', 'epilogue', 'credits'].some(route => route === hash) ? hash as Route : 'home'
 }
