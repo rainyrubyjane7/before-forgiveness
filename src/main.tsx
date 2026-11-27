@@ -8,6 +8,7 @@ import './style.css'
 import { ChapterFrame, FooterMark } from './ChapterFrame'
 import { MemoryBottle } from './MemoryBottle'
 import './edition.css'
+import './reading-materials.css'
 
 const storageKey = 'before-forgiveness:v1'
 type Checkpoint = { route: Route; scroll: number }
@@ -88,7 +89,6 @@ function Cover({ progress, resume }: { progress: Progress; resume: () => void })
     <div className="jacket">
       <figure className="cover-plate">{coverMedia && <img src={source(coverMedia.src)} alt="" fetchPriority="high" />}</figure>
       <div className="cover-copy">
-      <p className="jacket-imprint" lang="en">Before Forgiveness</p>
       <h1 id="cover-title" tabIndex={-1} aria-label={title}><span>在获得</span><br /><span>原谅之前</span></h1>
       <p className="cover-author">作者：狗点什么</p>
       <div className="cover-actions">
@@ -228,6 +228,7 @@ function Epilogue({ film }: { film: boolean }) {
       </div> : <>
         <video src={source('media/end.mp4')} preload="metadata" controls playsInline aria-label="片尾影片" onEnded={finishFilm} onError={() => setFailed(true)} />
         {failed && <p role="status">视频暂时无法播放。<a href={source('media/end.mp4')}>打开视频文件</a> <button onClick={finishFilm}>前往番外入口</button></p>}
+        <a className="subtle-link credits-extra-link" href="#extra">前往番外</a>
       </>}
       <a className="subtle-link" href="#choice">返回结局选择</a>
     </div>
@@ -304,7 +305,7 @@ function App() {
   }, [route])
 
   useEffect(() => {
-    document.title = isReading(route) ? `${shortTitle(route)} · ${title}` : `${title} · Before Forgiveness`
+    document.title = isReading(route) ? `${shortTitle(route)} · ${title}` : title
   }, [route])
 
   function resume() {

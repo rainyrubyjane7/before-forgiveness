@@ -1,0 +1,105 @@
+/* The material stays most visible in the outer margins. The central wash
+   preserves the contrast of the chapter's existing ink and paper colors. */
+.reading:where(.reading-ch01, .reading-ch02, .reading-ch03, .reading-ch04, .reading-ch05, .reading-ch06, .reading-ch07, .reading-ch08, .reading-ch09, .reading-kiss) {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, var(--material-edge), var(--material-center) var(--material-inset, 28%),
+      var(--material-center) calc(100% - var(--material-inset, 28%)), var(--material-edge)),
+    var(--page-material);
+  background-size: auto, var(--material-size, 720px auto);
+  background-position: center, var(--material-position, center top);
+}
+
+.reading:where(.reading-ch01, .reading-ch03, .reading-ch04, .reading-ch06, .reading-ch08, .reading-ch09, .reading-kiss) {
+  --material-inset: clamp(22px, calc((100% - 680px) / 2), 28%);
+}
+
+.reading-ch01 {
+  --page-material: url('./materials/walnut.webp');
+  --material-size: 700px auto;
+  --material-center: color-mix(in srgb, var(--paper) 26%, transparent);
+  --material-edge: color-mix(in srgb, var(--paper) 6%, transparent);
+}
+
+.reading-ch02 {
+  --page-material: repeating-linear-gradient(0deg, #667d5f40 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(90deg, #526e5649 0 12px, transparent 12px 24px);
+  --material-edge: color-mix(in srgb, var(--paper) 23%, transparent);
+  --material-center: color-mix(in srgb, var(--paper) 81%, transparent);
+  --material-size: auto;
+}
+
+.reading-ch03 {
+  --page-material: url('./materials/velvet.webp');
+  --material-size: max(515px, 100%) 100%;
+  --material-center: color-mix(in srgb, var(--paper) 54%, transparent);
+  --material-edge: color-mix(in srgb, var(--paper) 9%, transparent);
+}
+
+.reading-ch04 {
+  --page-material: url('./materials/paper.webp');
+  --material-size: 875px auto;
+  --material-edge: color-mix(in srgb, var(--paper) 10%, transparent);
+  --material-center: color-mix(in srgb, var(--paper) 35%, transparent);
+}
+
+.reading-ch05 {
+  --page-material: url('./materials/lawn.webp');
+  --material-size: 575px auto;
+  --material-center: color-mix(in srgb, var(--paper) 85%, transparent);
+  --material-edge: color-mix(in srgb, var(--paper) 34%, transparent);
+}
+
+.reading-ch06 {
+  --page-material: url('./materials/oak.webp');
+  --material-size: 900px auto;
+  --material-edge: color-mix(in srgb, #211610 30%, transparent);
+  --material-center: color-mix(in srgb, #211610 52%, transparent);
+}
+
+.reading-ch07 {
+  --page-material: url('./materials/marble.webp');
+  --material-size: max(710px, 100%) auto;
+  --material-position: right top;
+  --material-center: color-mix(in srgb, var(--paper) 46%, transparent);
+  --material-edge: color-mix(in srgb, var(--paper) 15%, transparent);
+}
+
+.reading-ch08 {
+  --page-material: url('./materials/linen.webp');
+  --material-size: max(485px, 100%) auto;
+  --material-center: color-mix(in srgb, var(--paper) 33%, transparent);
+  --material-edge: color-mix(in srgb, var(--paper) 8%, transparent);
+}
+
+.reading-ch09 {
+  --page-material: url('./materials/charcoal.webp');
+  --material-size: 840px auto;
+  --material-center: color-mix(in srgb, var(--paper) 41%, transparent);
+  --material-edge: color-mix(in srgb, var(--paper) 13%, transparent);
+}
+
+.reading-silence {
+  --material-size: 650px 580px;
+  background-color: #142439;
+  background-image:
+    url('./materials/stars.svg'),
+    radial-gradient(ellipse at 48% 12%, #60799768, transparent 54%),
+    linear-gradient(170deg, #142236, #203751 60%, #111e30);
+  background-size: var(--material-size), auto, auto;
+  background-position: center top;
+}
+
+.reading-kiss {
+  --page-material: url('./materials/voile.webp');
+  --material-size: max(515px, 100%) 100%;
+  --material-center: color-mix(in srgb, #fff5df 36%, transparent);
+  --material-edge: transparent;
+}
+
+.reading-kiss .prose { color: #553b28; }
+
+@media (max-width: 680px) {
+  .reading:where(.reading-ch02, .reading-ch05, .reading-ch07) { --material-inset: 10%; }
+  .reading-silence { background-position: 32% top, center, center; }
+}
